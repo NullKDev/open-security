@@ -1,0 +1,164 @@
+{
+  "nav": {
+    "queue": "Queue",
+    "projects": "Projects",
+    "posture": "Posture",
+    "reports": "Reports",
+    "settings": "Settings",
+    "newScan": "New Scan"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong.",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "open": "Open",
+    "dismiss": "Dismiss",
+    "reopen": "Reopen",
+    "viewAll": "View all",
+    "loadMore": "Load more",
+    "noResults": "No results found.",
+    "learnMore": "Learn more"
+  },
+  "queue": {
+    "title": "Remediation Queue",
+    "subtitle": "{count, plural, one {# finding open} other {# findings open}}",
+    "tabs": {
+      "open": "Open",
+      "dismissed": "Dismissed"
+    },
+    "empty": {
+      "title": "Queue is clear",
+      "description": "No open findings match your current filters."
+    },
+    "dismissedEmpty": {
+      "title": "No dismissed findings",
+      "description": "Dismissed findings are suppressed from the queue across all scans."
+    },
+    "filters": {
+      "severity": "Severity",
+      "project": "Project",
+      "hasPatch": "Has patch",
+      "kevOnly": "KEV only"
+    },
+    "severity": {
+      "critical": "Critical",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low",
+      "info": "Info"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "empty": {
+      "title": "No projects yet",
+      "description": "Start by scanning a repository or local folder.",
+      "cta": "New Scan"
+    },
+    "scans": "{count, plural, one {# scan} other {# scans}}",
+    "findings": "{count, plural, one {# finding} other {# findings}}",
+    "scanning": "Scanning…"
+  },
+  "posture": {
+    "title": "Security Posture",
+    "subtitle": "Severity-weighted vulnerability trends over time",
+    "weightedScore": "Weighted Severity Score",
+    "mttr": "Mean Time To Remediate",
+    "regressionRate": "Regression Rate",
+    "hotspots": "File × Author Hotspots",
+    "ranges": {
+      "7d": "7d",
+      "30d": "30d",
+      "60d": "60d",
+      "90d": "90d",
+      "all": "All"
+    }
+  },
+  "reports": {
+    "title": "Reports",
+    "empty": {
+      "title": "No reports yet",
+      "description": "Complete a scan to generate a report."
+    }
+  },
+  "scan": {
+    "title": "Scan",
+    "stages": {
+      "prep": "Prep",
+      "classical": "Classical",
+      "llmScan": "LLM Scan",
+      "validate": "Validate",
+      "patch": "Patch"
+    },
+    "status": {
+      "pending": "Pending",
+      "running": "Running",
+      "done": "Done",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    },
+    "findings": "{count, plural, one {# finding} other {# findings}} found",
+    "cost": "Cost",
+    "tokens": "Tokens",
+    "pipeline": "Pipeline",
+    "logs": "Analysis Log"
+  },
+  "newScan": {
+    "title": "New Scan",
+    "step1Title": "Source",
+    "step2Title": "Configuration",
+    "sourceLabel": "Repository or folder",
+    "sourcePlaceholder": "https://github.com/org/repo or /path/to/folder",
+    "projectNameLabel": "Project name",
+    "projectNamePlaceholder": "my-project",
+    "startScan": "Start Scan",
+    "creating": "Creating…",
+    "scanning": "Scanning…"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageDescription": "Choose the display language for the interface.",
+    "languages": {
+      "en": "English",
+      "es": "Español"
+    },
+    "sections": {
+      "providers": "Providers",
+      "repos": "Repositories",
+      "webhook": "Webhook",
+      "policies": "Policies",
+      "integrations": "Integrations"
+    }
+  },
+  "findings": {
+    "title": "Findings",
+    "tabs": {
+      "active": "All findings",
+      "dismissed": "Dismissed"
+    }
+  },
+  "errors": {
+    "connectionLost": "Connection lost.",
+    "retryConnection": "Retry connection",
+    "scanFailed": "Scan failed.",
+    "notFound": "Not found.",
+    "loadFailed": "Failed to load data."
+  },
+  "footer": {
+    "version": "v{version}",
+    "github": "GitHub"
+  }
+}

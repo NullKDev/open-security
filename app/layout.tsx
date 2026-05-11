@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Fira_Code } from "next/font/google";
 import { cookies } from "next/headers";
+import { NextIntlClientProvider } from "next-intl";
+import { getUserLocale } from "@/lib/i18n/locale";
 import "./globals.css";
 import { Shell } from "@/components/Shell";
 
@@ -34,10 +36,12 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies();
   const theme = cookieStore.get("obt-theme")?.value || "light";
+  const locale = await getUserLocale();
+  const messages = (await import(`../messages/${locale}.json`)).default;
 
   return (
     <html
-      lang="en"
+      lang={locale}
       data-theme={theme}
       className={`${plusJakartaSans.variable} ${firaCode.variable} h-full antialiased`}
       suppressHydrationWarning
@@ -50,7 +54,9 @@ export default async function RootLayout({
         />
       </head>
       <body className="h-full bg-bg text-fg">
-        <Shell>{children}</Shell>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Shell>{children}</Shell>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

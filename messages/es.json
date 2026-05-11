@@ -1,0 +1,164 @@
+{
+  "nav": {
+    "queue": "Cola",
+    "projects": "Proyectos",
+    "posture": "Postura",
+    "reports": "Reportes",
+    "settings": "Configuración",
+    "newScan": "Nuevo Escaneo"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "Algo salió mal.",
+    "retry": "Reintentar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "import": "Importar",
+    "open": "Abrir",
+    "dismiss": "Descartar",
+    "reopen": "Reabrir",
+    "viewAll": "Ver todo",
+    "loadMore": "Cargar más",
+    "noResults": "Sin resultados.",
+    "learnMore": "Más información"
+  },
+  "queue": {
+    "title": "Cola de Remediación",
+    "subtitle": "{count, plural, one {# hallazgo abierto} other {# hallazgos abiertos}}",
+    "tabs": {
+      "open": "Abiertos",
+      "dismissed": "Descartados"
+    },
+    "empty": {
+      "title": "Cola vacía",
+      "description": "No hay hallazgos abiertos con los filtros actuales."
+    },
+    "dismissedEmpty": {
+      "title": "Sin hallazgos descartados",
+      "description": "Los hallazgos descartados son suprimidos de la cola en todos los escaneos."
+    },
+    "filters": {
+      "severity": "Severidad",
+      "project": "Proyecto",
+      "hasPatch": "Tiene parche",
+      "kevOnly": "Solo KEV"
+    },
+    "severity": {
+      "critical": "Crítico",
+      "high": "Alto",
+      "medium": "Medio",
+      "low": "Bajo",
+      "info": "Info"
+    }
+  },
+  "projects": {
+    "title": "Proyectos",
+    "empty": {
+      "title": "Sin proyectos aún",
+      "description": "Comenzá escaneando un repositorio o carpeta local.",
+      "cta": "Nuevo Escaneo"
+    },
+    "scans": "{count, plural, one {# escaneo} other {# escaneos}}",
+    "findings": "{count, plural, one {# hallazgo} other {# hallazgos}}",
+    "scanning": "Escaneando…"
+  },
+  "posture": {
+    "title": "Postura de Seguridad",
+    "subtitle": "Tendencias de vulnerabilidad ponderadas por severidad",
+    "weightedScore": "Puntaje de Severidad Ponderado",
+    "mttr": "Tiempo Medio de Remediación",
+    "regressionRate": "Tasa de Regresión",
+    "hotspots": "Puntos Calientes Archivo × Autor",
+    "ranges": {
+      "7d": "7d",
+      "30d": "30d",
+      "60d": "60d",
+      "90d": "90d",
+      "all": "Todo"
+    }
+  },
+  "reports": {
+    "title": "Reportes",
+    "empty": {
+      "title": "Sin reportes aún",
+      "description": "Completá un escaneo para generar un reporte."
+    }
+  },
+  "scan": {
+    "title": "Escaneo",
+    "stages": {
+      "prep": "Preparación",
+      "classical": "Clásico",
+      "llmScan": "Escaneo LLM",
+      "validate": "Validación",
+      "patch": "Parche"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "running": "Ejecutando",
+      "done": "Completado",
+      "failed": "Fallido",
+      "cancelled": "Cancelado"
+    },
+    "findings": "{count, plural, one {# hallazgo} other {# hallazgos}} encontrados",
+    "cost": "Costo",
+    "tokens": "Tokens",
+    "pipeline": "Pipeline",
+    "logs": "Log de Análisis"
+  },
+  "newScan": {
+    "title": "Nuevo Escaneo",
+    "step1Title": "Fuente",
+    "step2Title": "Configuración",
+    "sourceLabel": "Repositorio o carpeta",
+    "sourcePlaceholder": "https://github.com/org/repo o /ruta/a/carpeta",
+    "projectNameLabel": "Nombre del proyecto",
+    "projectNamePlaceholder": "mi-proyecto",
+    "startScan": "Iniciar Escaneo",
+    "creating": "Creando…",
+    "scanning": "Escaneando…"
+  },
+  "settings": {
+    "title": "Configuración",
+    "language": "Idioma",
+    "languageDescription": "Elegí el idioma de la interfaz.",
+    "languages": {
+      "en": "English",
+      "es": "Español"
+    },
+    "sections": {
+      "providers": "Proveedores",
+      "repos": "Repositorios",
+      "webhook": "Webhook",
+      "policies": "Políticas",
+      "integrations": "Integraciones"
+    }
+  },
+  "findings": {
+    "title": "Hallazgos",
+    "tabs": {
+      "active": "Todos los hallazgos",
+      "dismissed": "Descartados"
+    }
+  },
+  "errors": {
+    "connectionLost": "Conexión perdida.",
+    "retryConnection": "Reintentar conexión",
+    "scanFailed": "El escaneo falló.",
+    "notFound": "No encontrado.",
+    "loadFailed": "Error al cargar datos."
+  },
+  "footer": {
+    "version": "v{version}",
+    "github": "GitHub"
+  }
+}
