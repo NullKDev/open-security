@@ -5,7 +5,8 @@
     "posture": "Posture",
     "reports": "Reports",
     "settings": "Settings",
-    "newScan": "New Scan"
+    "newScan": "New Scan",
+    "hunt": "Hunt"
   },
   "common": {
     "loading": "Loading…",

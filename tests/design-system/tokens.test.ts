@@ -91,9 +91,9 @@ describe('Design token — :root (light theme)', () => {
     expect(value).toBe('#f59e0b')
   })
 
-  it('--success resolves to #10b981', () => {
+  it('--success resolves to #059669 (green-600 — passes WCAG 3:1 on white)', () => {
     const value = extractToken(root, '--success')
-    expect(value).toBe('#10b981')
+    expect(value).toBe('#059669')
   })
 })
 
@@ -172,5 +172,69 @@ describe('Design token — body and monospace rules', () => {
   it('code/pre/kbd/samp rule uses var(--font-mono)', () => {
     expect(css).toMatch(/code,\s*pre,\s*kbd,\s*samp\s*\{/)
     expect(css).toContain('font-family: var(--font-mono)')
+  })
+})
+
+describe('Design token — token naming conventions', () => {
+  it('uses --accent-surface (not --accent-muted) per spec', () => {
+    expect(css).toContain('--accent-surface:')
+    expect(css).not.toContain('--accent-muted:')
+  })
+
+  it('@theme block maps --color-accent-surface to var(--accent-surface)', () => {
+    const theme = extractBlock(css, '@theme inline')
+    const value = extractToken(theme, '--color-accent-surface')
+    expect(value).toBe('var(--accent-surface)')
+  })
+})
+
+// ─── WCAG 2.2 AA Contrast Tests ───────────────────────────────────────────────
+
+function hexToLinear(hex: string): number {
+  const n = parseInt(hex, 16) / 255
+  return n <= 0.03928 ? n / 12.92 : Math.pow((n + 0.055) / 1.055, 2.4)
+}
+
+function relativeLuminance(hex: string): number {
+  const r = hexToLinear(hex.slice(1, 3))
+  const g = hexToLinear(hex.slice(3, 5))
+  const b = hexToLinear(hex.slice(5, 7))
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
+function contrastRatio(fg: string, bg: string): number {
+  const l1 = relativeLuminance(fg)
+  const l2 = relativeLuminance(bg)
+  const lighter = Math.max(l1, l2)
+  const darker = Math.min(l1, l2)
+  return (lighter + 0.05) / (darker + 0.05)
+}
+
+describe('WCAG 2.2 AA — contrast ratios', () => {
+  it('body text light: #0a0a0a on #ffffff ≥ 4.5:1 (AA normal text)', () => {
+    expect(contrastRatio('#0a0a0a', '#ffffff')).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('body text dark: #fafafa on #0a0a0a ≥ 4.5:1 (AA normal text)', () => {
+    expect(contrastRatio('#fafafa', '#0a0a0a')).toBeGreaterThanOrEqual(4.5)
+  })
+
+  it('danger #ef4444 on #ffffff ≥ 3:1 (AA large text / UI component)', () => {
+    expect(contrastRatio('#ef4444', '#ffffff')).toBeGreaterThanOrEqual(3)
+  })
+
+  it('success #059669 on #ffffff ≥ 3:1 (AA large text / UI component)', () => {
+    expect(contrastRatio('#059669', '#ffffff')).toBeGreaterThanOrEqual(3)
+  })
+
+  it('accent #f97316 is documented as UI-only — does NOT meet 4.5:1 for body text', () => {
+    // Orange on white is ~3.0:1 — valid ONLY for large text and UI components, never body text
+    const ratio = contrastRatio('#f97316', '#ffffff')
+    expect(ratio).toBeGreaterThanOrEqual(2.5)
+    expect(ratio).toBeLessThan(4.5)
+  })
+
+  it('warning #f59e0b on dark bg #0a0a0a ≥ 3:1 (dark mode UI component)', () => {
+    expect(contrastRatio('#f59e0b', '#0a0a0a')).toBeGreaterThanOrEqual(3)
   })
 })

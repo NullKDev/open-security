@@ -18,10 +18,10 @@
   --border: #e5e5e5;
   --accent: #f97316;
   --accent-hover: #ea580c;
-  --accent-muted: rgba(249, 115, 22, 0.1);
+  --accent-surface: rgba(249, 115, 22, 0.1);
   --danger: #ef4444;
   --warning: #f59e0b;
-  --success: #10b981;
+  --success: #059669;
 
   /* Shadow — Claude Design copper-tinted */
   --shadow-card: rgba(180, 90, 30, 0.06) 0px 1px 3px 0px;
@@ -75,10 +75,10 @@
   --border: #2a2a2a;
   --accent: #f97316;
   --accent-hover: #ea580c;
-  --accent-muted: rgba(249, 115, 22, 0.1);
+  --accent-surface: rgba(249, 115, 22, 0.1);
   --danger: #ef4444;
   --warning: #f59e0b;
-  --success: #10b981;
+  --success: #059669;
   --shadow-card: rgba(180, 90, 30, 0.08) 0px 1px 3px 0px;
   --shadow-hover: rgba(180, 90, 30, 0.15) 0px 2px 6px 0px;
   --shadow-subtle: rgba(10, 10, 10, 0.08) 0px 1px 2px 0px;
@@ -96,7 +96,7 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
-  --color-accent-muted: var(--accent-muted);
+  --color-accent-surface: var(--accent-surface);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
   --color-success: var(--success);

@@ -5,7 +5,8 @@
     "posture": "Postura",
     "reports": "Reportes",
     "settings": "Configuración",
-    "newScan": "Nuevo Escaneo"
+    "newScan": "Nuevo Escaneo",
+    "hunt": "Búsqueda"
   },
   "common": {
     "loading": "Cargando…",
