@@ -100,6 +100,7 @@ export function AppSidebar() {
                         asChild
                         isActive={isActive}
                         tooltip={t(item.labelKey as Parameters<typeof t>[0])}
+                        aria-current={isActive ? "page" : undefined}
                         className={
                           isActive
                             ? "bg-accent/10 text-accent"
@@ -119,13 +120,24 @@ export function AppSidebar() {
           </SidebarGroup>
         </SidebarContent>
 
-        {/* ── Footer: theme toggle + version ───────────────────────── */}
+        {/* ── Footer: theme toggle + version + GitHub ──────────────── */}
         <SidebarFooter>
           <div className="flex items-center justify-between px-1">
             <ThemeToggle />
-            <span className="text-[10px] text-sidebar-foreground/30 group-data-[collapsible=icon]:hidden">
-              v{APP_VERSION}
-            </span>
+            <div className="flex items-center gap-2 group-data-[collapsible=icon]:hidden">
+              <span className="text-[10px] text-sidebar-foreground/30">
+                v{APP_VERSION}
+              </span>
+              <a
+                href="https://github.com/open-security/open-security"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] text-sidebar-foreground/30 hover:text-sidebar-foreground/60 transition-colors"
+                aria-label="GitHub"
+              >
+                GitHub
+              </a>
+            </div>
           </div>
         </SidebarFooter>
       </Sidebar>

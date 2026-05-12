@@ -25,26 +25,7 @@ function first(v: string | string[] | undefined): string | undefined {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-/**
- * Maps an fp_type value to a human-readable label.
- *
- * @param fpType - The raw fp_type string from the dismissal record
- * @returns Human-readable label
- */
-function fpTypeLabel(fpType: string): string {
-  switch (fpType) {
-    case "not_vulnerable":
-      return "Not vulnerable";
-    case "accepted_risk":
-      return "Accepted risk";
-    case "wont_fix":
-      return "Won't fix";
-    case "duplicate":
-      return "Duplicate";
-    default:
-      return fpType;
-  }
-}
+// fpTypeLabel is resolved from the catalog in QueuePage via tFindings.
 
 /**
  * Formats an ISO timestamp to a human-readable relative time.
@@ -89,10 +70,19 @@ function tabClass(active: boolean): string {
 export default async function QueuePage({ searchParams }: PageProps) {
   const t = await getTranslations("queue");
   const tCommon = await getTranslations("common");
+  const tFindings = await getTranslations("findings");
   const params = await searchParams;
   const tab = first(params.tab) ?? "open";
   const search = first(params.search) ?? "";
   const isDismissedTab = tab === "dismissed";
+
+  /** Catalog-sourced labels for fp_type values. */
+  const fpLabels: Record<string, string> = {
+    not_vulnerable: tFindings("fpTypes.not_vulnerable"),
+    accepted_risk: tFindings("fpTypes.accepted_risk"),
+    wont_fix: tFindings("fpTypes.wont_fix"),
+    duplicate: tFindings("fpTypes.duplicate"),
+  };
 
   const db = getDb();
 
@@ -282,10 +272,10 @@ export default async function QueuePage({ searchParams }: PageProps) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-border bg-surface text-left text-xs font-medium text-fg/50">
-                    <th className="px-4 py-3">Finding</th>
-                    <th className="px-4 py-3">Type</th>
-                    <th className="px-4 py-3">Reason</th>
-                    <th className="px-4 py-3">Dismissed</th>
+                    <th className="px-4 py-3">{t("table.finding")}</th>
+                    <th className="px-4 py-3">{t("table.type")}</th>
+                    <th className="px-4 py-3">{t("table.reason")}</th>
+                    <th className="px-4 py-3">{t("table.dismissed")}</th>
                     <th className="px-4 py-3" />
                   </tr>
                 </thead>
@@ -300,7 +290,7 @@ export default async function QueuePage({ searchParams }: PageProps) {
                       </td>
                       <td className="px-4 py-3">
                         <span className="inline-flex rounded-md border border-border px-2 py-0.5 text-xs font-medium text-fg/70">
-                          {fpTypeLabel(d.fpType)}
+                          {fpLabels[d.fpType] ?? d.fpType}
                         </span>
                       </td>
                       <td className="px-4 py-3 max-w-xs text-fg/70">
