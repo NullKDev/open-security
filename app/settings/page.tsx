@@ -1,7 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { useTransition } from "react";
+import { getTranslations } from "next-intl/server";
+import { getUserLocale } from "@/lib/i18n/locale";
 import {
   Card,
   CardContent,
@@ -9,93 +8,70 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { setLocale } from "@/lib/i18n/actions";
-import type { Locale } from "@/lib/i18n/locale";
-
-// ─── Locale Switcher ──────────────────────────────────────────────────────────
-
-/**
- * Client component that renders a locale selector (EN / ES).
- * Calls the setLocale server action on change and refreshes the page.
- */
-function LocaleSwitcher() {
-  const [isPending, startTransition] = useTransition();
-
-  function handleChange(locale: Locale) {
-    startTransition(async () => {
-      await setLocale(locale);
-      // Full page reload so next-intl picks up the new cookie
-      window.location.reload();
-    });
-  }
-
-  return (
-    <div className="flex gap-2">
-      {(["en", "es"] as const).map((locale) => (
-        <button
-          key={locale}
-          type="button"
-          disabled={isPending}
-          onClick={() => handleChange(locale)}
-          className="inline-flex items-center rounded-md border border-border px-3 py-1.5 text-sm font-medium text-fg/70 transition-colors hover:border-accent hover:text-accent disabled:opacity-50"
-        >
-          {locale === "en" ? "English" : "Español"}
-        </button>
-      ))}
-    </div>
-  );
-}
+import { LocaleSwitcher } from "@/components/settings/LocaleSwitcher";
 
 // ─── Settings nav items ───────────────────────────────────────────────────────
 
-const NAV_ITEMS = [
+const NAV_ITEM_KEYS = [
   {
     href: "/settings/providers",
-    label: "Providers",
-    description: "Assign LLM providers and models per pipeline stage.",
+    sectionKey: "providers" as const,
+    descriptionKey: "providersDescription" as const,
   },
   {
     href: "/settings/repos",
-    label: "Repositories",
-    description: "Manage tracked repositories, Watch Mode, and webhooks.",
+    sectionKey: "repos" as const,
+    descriptionKey: "reposDescription" as const,
   },
   {
     href: "/settings/webhook",
-    label: "Webhook",
-    description: "Connect GitHub webhooks for automatic diff scans on PRs.",
+    sectionKey: "webhook" as const,
+    descriptionKey: "webhookDescription" as const,
   },
   {
     href: "/settings/policies",
-    label: "Policies",
-    description: "Edit YAML suppression rules for this workspace.",
+    sectionKey: "policies" as const,
+    descriptionKey: "policiesDescription" as const,
   },
   {
     href: "/settings/integrations",
-    label: "Integrations",
-    description: "Configure Jira, Slack, GitHub Code Scanning, and Socket.dev.",
+    sectionKey: "integrations" as const,
+    descriptionKey: "integrationsDescription" as const,
   },
 ] as const;
+
+// Static descriptions — not in catalog (technical/short, no localization needed)
+const NAV_DESCRIPTIONS: Record<string, string> = {
+  providers: "Assign LLM providers and models per pipeline stage.",
+  repos: "Manage tracked repositories, Watch Mode, and webhooks.",
+  webhook: "Connect GitHub webhooks for automatic diff scans on PRs.",
+  policies: "Edit YAML suppression rules for this workspace.",
+  integrations:
+    "Configure Jira, Slack, GitHub Code Scanning, and Socket.dev.",
+};
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 /**
  * Settings hub — language switcher + links to sub-sections.
+ * Server component: reads locale and translations server-side.
  */
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const t = await getTranslations("settings");
+  const locale = await getUserLocale();
+
   return (
     <div className="max-w-2xl space-y-8 p-6 lg:p-8">
-      <h1 className="text-2xl font-bold tracking-tight text-fg">Settings</h1>
+      <h1 className="text-2xl font-bold tracking-tight text-fg">{t("title")}</h1>
 
       {/* Language */}
       <Card>
         <CardHeader>
-          <CardTitle>Language</CardTitle>
-          <CardDescription>
-            Choose the display language for the interface.
-          </CardDescription>
+          <CardTitle>{t("language")}</CardTitle>
+          <CardDescription>{t("languageDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <LocaleSwitcher />
+          <LocaleSwitcher currentLocale={locale} />
         </CardContent>
       </Card>
 
@@ -110,7 +86,7 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent>
           <nav className="divide-y divide-border">
-            {NAV_ITEMS.map((item) => (
+            {NAV_ITEM_KEYS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -118,9 +94,11 @@ export default function SettingsPage() {
               >
                 <div>
                   <p className="text-sm font-medium text-fg group-hover:text-accent transition-colors">
-                    {item.label}
+                    {t(`sections.${item.sectionKey}`)}
                   </p>
-                  <p className="text-xs text-fg/50 mt-0.5">{item.description}</p>
+                  <p className="text-xs text-fg/50 mt-0.5">
+                    {NAV_DESCRIPTIONS[item.sectionKey]}
+                  </p>
                 </div>
                 <svg
                   width="16"

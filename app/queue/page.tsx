@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import { getTranslations } from "next-intl/server";
 import { getDb } from "@/lib/db/client";
 import { getQueue, getQueueStats } from "@/lib/repos/queue.repo";
 import { getBranchByFindingId } from "@/lib/repos/finding-branches.repo";
@@ -86,6 +87,8 @@ function tabClass(active: boolean): string {
  * URL: /queue (open tab) | /queue?tab=dismissed[&search=...] (dismissed tab)
  */
 export default async function QueuePage({ searchParams }: PageProps) {
+  const t = await getTranslations("queue");
+  const tCommon = await getTranslations("common");
   const params = await searchParams;
   const tab = first(params.tab) ?? "open";
   const search = first(params.search) ?? "";
@@ -142,10 +145,10 @@ export default async function QueuePage({ searchParams }: PageProps) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-xl font-bold tracking-tight text-fg">
-            Remediation Queue
+            {t("title")}
           </h1>
           <p className="mt-1 text-sm text-fg/50">
-            {total} {total === 1 ? "finding" : "findings"} open
+            {t("subtitle", { count: total })}
             {kevCount > 0 && (
               <>
                 {" · "}
@@ -177,10 +180,10 @@ export default async function QueuePage({ searchParams }: PageProps) {
       {/* Tab bar — link-based (SSR-friendly) */}
       <div className="flex gap-1 border-b border-border">
         <Link href="/queue" className={tabClass(!isDismissedTab)}>
-          Open ({total})
+          {t("tabs.open")} ({total})
         </Link>
         <Link href="/queue?tab=dismissed" className={tabClass(isDismissedTab)}>
-          Dismissed
+          {t("tabs.dismissed")}
           {isDismissedTab && dismissals.length > 0 && (
             <span className="ml-1.5 rounded-full bg-accent/10 px-1.5 py-0.5 text-xs font-medium text-accent">
               {dismissals.length}
@@ -216,9 +219,9 @@ export default async function QueuePage({ searchParams }: PageProps) {
                   <polyline points="9 12 11 14 15 10" />
                 </svg>
               </div>
-              <h2 className="text-base font-semibold text-fg">Queue is clear</h2>
+              <h2 className="text-base font-semibold text-fg">{t("empty.title")}</h2>
               <p className="mt-1 text-sm text-fg/50">
-                No open findings match your current filters.
+                {t("empty.description")}
               </p>
             </div>
           ) : (
@@ -247,7 +250,7 @@ export default async function QueuePage({ searchParams }: PageProps) {
                     }).toString()}`}
                     className="rounded-md border border-border px-4 py-2 text-sm text-fg/60 hover:bg-surface-hover hover:text-fg transition-colors"
                   >
-                    Load more
+                    {tCommon("loadMore")}
                   </a>
                 </div>
               )}
@@ -267,12 +270,11 @@ export default async function QueuePage({ searchParams }: PageProps) {
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <p className="text-sm font-medium text-fg">
                 {search.trim().length > 0
-                  ? "No dismissed findings match your search."
-                  : "No dismissed findings yet."}
+                  ? tCommon("noResults")
+                  : t("dismissedEmpty.title")}
               </p>
               <p className="mt-1 text-xs text-fg/50">
-                Dismissed findings are suppressed from the queue across all
-                scans.
+                {t("dismissedEmpty.description")}
               </p>
             </div>
           ) : (

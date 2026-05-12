@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BranchStatusPill } from "@/components/ui/BranchStatusPill";
@@ -24,6 +25,7 @@ interface QueueItemProps {
  */
 export function QueueItem({ finding, branchStatus }: QueueItemProps) {
   const router = useRouter();
+  const tCommon = useTranslations("common");
   const [dismissOpen, setDismissOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
   const [currentBranchStatus, setCurrentBranchStatus] = useState<
@@ -140,7 +142,7 @@ export function QueueItem({ finding, branchStatus }: QueueItemProps) {
                 onClick={handleConfirm}
                 disabled={confirming}
               >
-                {confirming ? "Creating…" : "Confirm fix"}
+                {confirming ? "Creating…" : tCommon("confirm")}
               </Button>
             )}
 
@@ -149,7 +151,7 @@ export function QueueItem({ finding, branchStatus }: QueueItemProps) {
               size="sm"
               onClick={() => setDismissOpen(true)}
             >
-              Dismiss
+              {tCommon("dismiss")}
             </Button>
           </div>
         </div>

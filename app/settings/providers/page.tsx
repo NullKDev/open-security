@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, type FormEvent } from "react";
+import { useTranslations } from "next-intl";
 import {
   Card,
   CardHeader,
@@ -172,6 +173,7 @@ type StageState = { providerKey: string; modelId: string };
  * Assign LLM providers and models per pipeline stage.
  */
 export default function ProvidersPage() {
+  const t = useTranslations("settings");
   const [providers, setProviders] = useState<ProvidersData | null>(null);
   const [stages, setStages] = useState<Record<StageKey, StageState>>(
     () =>
@@ -306,7 +308,7 @@ export default function ProvidersPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold tracking-tight text-fg">
-          Providers
+          {t("sections.providers")}
         </h1>
       </div>
 

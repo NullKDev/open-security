@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -32,6 +33,8 @@ interface NewScanModalProps {
  */
 export function NewScanModal({ open, onOpenChange }: NewScanModalProps) {
   const router = useRouter();
+  const t = useTranslations("newScan");
+  const tCommon = useTranslations("common");
 
   const [step, setStep] = useState<ModalStep>("source");
   const [sourceData, setSourceData] = useState<SourceData | undefined>();
@@ -110,7 +113,7 @@ export function NewScanModal({ open, onOpenChange }: NewScanModalProps) {
       <DialogContent className="sm:max-w-lg" showCloseButton>
         <DialogHeader>
           <DialogTitle>
-            {step === "config" ? "Configure scan" : "New scan"}
+            {step === "config" ? t("step2Title") : t("title")}
           </DialogTitle>
           <DialogDescription>
             {step === "config"
@@ -150,7 +153,7 @@ export function NewScanModal({ open, onOpenChange }: NewScanModalProps) {
             )}
             <DialogFooter>
               <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>
-                Cancel
+                {tCommon("cancel")}
               </Button>
               <Button
                 variant="primary"
@@ -158,7 +161,7 @@ export function NewScanModal({ open, onOpenChange }: NewScanModalProps) {
                 disabled={!isSourceValid || isSubmitting}
                 loading={isSubmitting}
               >
-                Next
+                {tCommon("next")}
               </Button>
             </DialogFooter>
           </div>

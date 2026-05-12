@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { getDb } from "@/lib/db/client";
 import { listProjects } from "@/lib/repos/projects.repo";
 import { listScansByProject } from "@/lib/repos/scans.repo";
@@ -13,6 +14,7 @@ import { ScanStatusPoller } from "@/components/ui/ScanStatusPoller";
  * Extracted from the old dashboard (app/page.tsx) as part of route restructuring.
  */
 export default async function ProjectsPage() {
+  const t = await getTranslations("projects");
   const db = getDb();
   const projects = listProjects(db);
 
@@ -49,7 +51,7 @@ export default async function ProjectsPage() {
           <span>No telemetry</span>
         </div>
         <Button variant="primary" className="mt-6" asChild>
-          <Link href="/queue">Go to Queue</Link>
+          <Link href="/queue">{t("empty.cta")}</Link>
         </Button>
       </div>
     );
@@ -61,7 +63,7 @@ export default async function ProjectsPage() {
   return (
     <div className="space-y-6 p-6 lg:p-8">
       <ScanStatusPoller hasRunning={anyRunning} />
-      <h1 className="text-2xl font-bold tracking-tight text-fg">Projects</h1>
+      <h1 className="text-2xl font-bold tracking-tight text-fg">{t("title")}</h1>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => {
           const scans = listScansByProject(db, project.id);
@@ -92,14 +94,9 @@ export default async function ProjectsPage() {
                   </div>
 
                   <div className="flex items-center gap-4 text-xs text-fg/50 tabular-nums">
-                    <span>
-                      {scans.length} {scans.length === 1 ? "scan" : "scans"}
-                    </span>
+                    <span>{t("scans", { count: scans.length })}</span>
                     {totalFindings > 0 && (
-                      <span>
-                        {totalFindings}{" "}
-                        {totalFindings === 1 ? "finding" : "findings"}
-                      </span>
+                      <span>{t("findings", { count: totalFindings })}</span>
                     )}
                   </div>
 
@@ -108,8 +105,8 @@ export default async function ProjectsPage() {
                       <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse shrink-0" />
                       <span className="text-[11px] text-accent font-medium truncate">
                         {runningScans.length > 1
-                          ? `${runningScans.length} scans running`
-                          : (runningScans[0].stage ?? "Scanning…")}
+                          ? t("scans", { count: runningScans.length })
+                          : (runningScans[0].stage ?? t("scanning"))}
                       </span>
                     </div>
                   ) : lastScan ? (
