@@ -149,7 +149,7 @@ export function NewScanModal({ open, onOpenChange }: NewScanModalProps) {
               onValidationChange={handleValidationChange}
             />
             {error && (
-              <p className="text-xs text-red-500">{error}</p>
+              <p className="text-xs text-danger">{error}</p>
             )}
             <DialogFooter>
               <Button variant="outline" onClick={handleClose} disabled={isSubmitting}>

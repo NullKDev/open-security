@@ -58,6 +58,12 @@
       "medium": "Medio",
       "low": "Bajo",
       "info": "Info"
+    },
+    "table": {
+      "finding": "Hallazgo",
+      "type": "Tipo",
+      "reason": "Razón",
+      "dismissed": "Descartado"
     }
   },
   "projects": {
@@ -140,7 +146,12 @@
       "repos": "Repositorios",
       "webhook": "Webhook",
       "policies": "Políticas",
-      "integrations": "Integraciones"
+      "integrations": "Integraciones",
+      "providersDesc": "Configurar proveedores y modelos LLM",
+      "reposDesc": "Repositorios monitoreados para watch mode",
+      "webhookDesc": "Configuración de webhook de GitHub",
+      "policiesDesc": "Políticas y reglas de escaneo",
+      "integrationsDesc": "Integraciones con terceros"
     }
   },
   "findings": {
@@ -148,6 +159,12 @@
     "tabs": {
       "active": "Todos los hallazgos",
       "dismissed": "Descartados"
+    },
+    "fpTypes": {
+      "not_vulnerable": "No vulnerable",
+      "accepted_risk": "Riesgo aceptado",
+      "wont_fix": "No se corregirá",
+      "duplicate": "Duplicado"
     }
   },
   "errors": {

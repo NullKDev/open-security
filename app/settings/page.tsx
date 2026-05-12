@@ -16,39 +16,29 @@ const NAV_ITEM_KEYS = [
   {
     href: "/settings/providers",
     sectionKey: "providers" as const,
-    descriptionKey: "providersDescription" as const,
+    descKey: "providersDesc" as const,
   },
   {
     href: "/settings/repos",
     sectionKey: "repos" as const,
-    descriptionKey: "reposDescription" as const,
+    descKey: "reposDesc" as const,
   },
   {
     href: "/settings/webhook",
     sectionKey: "webhook" as const,
-    descriptionKey: "webhookDescription" as const,
+    descKey: "webhookDesc" as const,
   },
   {
     href: "/settings/policies",
     sectionKey: "policies" as const,
-    descriptionKey: "policiesDescription" as const,
+    descKey: "policiesDesc" as const,
   },
   {
     href: "/settings/integrations",
     sectionKey: "integrations" as const,
-    descriptionKey: "integrationsDescription" as const,
+    descKey: "integrationsDesc" as const,
   },
 ] as const;
-
-// Static descriptions — not in catalog (technical/short, no localization needed)
-const NAV_DESCRIPTIONS: Record<string, string> = {
-  providers: "Assign LLM providers and models per pipeline stage.",
-  repos: "Manage tracked repositories, Watch Mode, and webhooks.",
-  webhook: "Connect GitHub webhooks for automatic diff scans on PRs.",
-  policies: "Edit YAML suppression rules for this workspace.",
-  integrations:
-    "Configure Jira, Slack, GitHub Code Scanning, and Socket.dev.",
-};
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -97,7 +87,7 @@ export default async function SettingsPage() {
                     {t(`sections.${item.sectionKey}`)}
                   </p>
                   <p className="text-xs text-fg/50 mt-0.5">
-                    {NAV_DESCRIPTIONS[item.sectionKey]}
+                    {t(`sections.${item.descKey}`)}
                   </p>
                 </div>
                 <svg
