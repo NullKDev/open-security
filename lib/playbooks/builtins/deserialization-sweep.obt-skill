@@ -1,0 +1,46 @@
+id: deserialization-sweep
+name: Deserialization Vulnerability Sweep
+version: 1.0.0
+description: >
+  Identifies unsafe deserialization patterns across the codebase.
+  Covers JSON, binary formats, and language-specific serialization APIs.
+source: builtin
+builtIn: true
+trusted: true
+scannerScope:
+  - semgrep
+promptTemplate: |
+  # Deserialization Vulnerability Sweep
+
+  ## Target
+  Repository: {{targetPath}}
+
+  ## Objective
+  Identify all deserialization operations that accept untrusted data and
+  assess exposure to deserialization attacks (CWE-502).
+
+  ## Analysis Steps
+
+  1. **Find deserialization entry points**:
+     - JavaScript/TypeScript: `JSON.parse`, `eval`, `vm.runInContext`, `Function()`
+     - Python: `pickle.loads`, `yaml.load` (unsafe), `marshal.loads`
+     - Java: `ObjectInputStream.readObject`, `XMLDecoder`
+     - Ruby: `Marshal.load`, `YAML.load`
+
+  2. **Trace untrusted input**: Determine whether any deserialization call
+     receives data from HTTP requests, WebSockets, message queues, or files
+     uploaded by users.
+
+  3. **Assess schema validation**: Check if deserialized data is validated
+     against a strict schema before any properties are accessed.
+
+  4. **Gadget chain assessment** (JVM/CLR):
+     - Check classpath for known gadget libraries.
+     - Assess whether `serialization-filter` or `ObjectInputFilter` is configured.
+
+  5. **YAML-specific risks**: Confirm that any YAML parsing uses a safe loader
+     (e.g., `yaml.safe_load` in Python, `yaml.parse()` not `yaml.load()` in Node).
+
+  ## Output
+  For each finding: deserialization API used, data source, validation present,
+  severity, and recommended safe alternative.

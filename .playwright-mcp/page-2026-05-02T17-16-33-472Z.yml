@@ -1,0 +1,95 @@
+- generic [ref=e1]:
+  - generic [active]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]:
+          - navigation [ref=e7]:
+            - button "previous" [disabled] [ref=e8]:
+              - img "previous" [ref=e9]
+            - generic [ref=e11]:
+              - generic [ref=e12]: 1/
+              - text: "1"
+            - button "next" [disabled] [ref=e13]:
+              - img "next" [ref=e14]
+          - img
+        - generic [ref=e16]:
+          - generic [ref=e17]:
+            - img [ref=e18]
+            - generic "Latest available version is detected (16.2.4)." [ref=e20]: Next.js 16.2.4
+            - generic [ref=e21]: Turbopack
+          - img
+      - dialog "Runtime SqliteError" [ref=e23]:
+        - generic [ref=e26]:
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - generic [ref=e29]:
+                - generic [ref=e30]: Runtime SqliteError
+                - generic [ref=e31]: Server
+              - generic [ref=e32]:
+                - button "Copy Error Info" [ref=e33] [cursor=pointer]:
+                  - img [ref=e34]
+                - button "No related documentation found" [disabled] [ref=e36]:
+                  - img [ref=e37]
+                - button "Attach Node.js inspector" [ref=e39] [cursor=pointer]:
+                  - img [ref=e40]
+            - generic [ref=e49]: "near \"CREATE\": syntax error"
+          - generic [ref=e50]:
+            - generic [ref=e51]:
+              - paragraph [ref=e53]:
+                - img [ref=e55]
+                - generic [ref=e59]: lib/db/migrate.ts (33:12) @ runMigrations
+                - button "Open in editor" [ref=e60] [cursor=pointer]:
+                  - img [ref=e62]
+              - generic [ref=e65]:
+                - generic [ref=e66]: 31 |
+                - generic [ref=e67]: 32 | const sql = readFileSync(join(folder, file), 'utf-8')
+                - generic [ref=e68]: "> 33 | sqlite.exec(sql)"
+                - generic [ref=e69]: "| ^"
+                - generic [ref=e70]: 34 | sqlite
+                - generic [ref=e71]: "35 | .prepare(`INSERT INTO ${MIGRATIONS_TABLE} (name, executed_at) VALUES (?, ?)`)"
+                - generic [ref=e72]: 36 | .run(file, new Date().toISOString())
+            - generic [ref=e73]:
+              - generic [ref=e74]:
+                - paragraph [ref=e75]:
+                  - text: Call Stack
+                  - generic [ref=e76]: "8"
+                - button "Show 5 ignore-listed frame(s)" [ref=e77] [cursor=pointer]:
+                  - text: Show 5 ignore-listed frame(s)
+                  - img [ref=e78]
+              - generic [ref=e80]:
+                - generic [ref=e81]:
+                  - text: runMigrations
+                  - button "Open runMigrations in editor" [ref=e82] [cursor=pointer]:
+                    - img [ref=e83]
+                - text: lib/db/migrate.ts (33:12)
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - text: getDb
+                  - button "Open getDb in editor" [ref=e87] [cursor=pointer]:
+                    - img [ref=e88]
+                - text: lib/db/client.ts (5:1)
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - text: Dashboard
+                  - button "Open Dashboard in editor" [ref=e92] [cursor=pointer]:
+                    - img [ref=e93]
+                - text: app/page.tsx (6:1)
+        - generic [ref=e95]: "1"
+        - generic [ref=e96]: "2"
+    - generic [ref=e101] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=e102]:
+        - img [ref=e103]
+      - generic [ref=e106]:
+        - button "Open issues overlay" [ref=e107]:
+          - generic [ref=e108]:
+            - generic [ref=e109]: "0"
+            - generic [ref=e110]: "1"
+          - generic [ref=e111]: Issue
+        - button "Collapse issues badge" [ref=e112]:
+          - img [ref=e113]
+  - generic [ref=e116]:
+    - img [ref=e117]
+    - heading "This page couldn’t load" [level=1] [ref=e119]
+    - paragraph [ref=e120]: A server error occurred. Reload to try again.
+    - button "Reload" [ref=e123] [cursor=pointer]
+  - paragraph [ref=e124]: ERROR 2284716659

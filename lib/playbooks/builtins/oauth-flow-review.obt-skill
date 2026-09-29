@@ -1,0 +1,52 @@
+id: oauth-flow-review
+name: OAuth Flow Security Review
+version: 1.0.0
+description: >
+  Reviews OAuth 2.0 and OIDC implementation for common security pitfalls
+  including state parameter bypass, open redirects, and token leakage.
+source: builtin
+builtIn: true
+trusted: true
+scannerScope:
+  - semgrep
+promptTemplate: |
+  # OAuth / OIDC Flow Security Review
+
+  ## Target
+  Repository: {{targetPath}}
+
+  ## Objective
+  Review the OAuth 2.0 and OpenID Connect implementation for security vulnerabilities
+  that could lead to account takeover or token theft.
+
+  ## Analysis Steps
+
+  1. **State parameter validation**:
+     - Verify that the `state` parameter is generated with sufficient entropy (>=128 bits).
+     - Confirm it is stored server-side (or in a HttpOnly cookie) and validated on callback.
+     - Flag missing or predictable state values (CSRF in OAuth).
+
+  2. **Redirect URI validation**:
+     - Confirm redirect URIs are validated against a strict allowlist.
+     - Flag open redirect vulnerabilities in the callback handler.
+     - Check for partial-match validation (subdomain hijacking risk).
+
+  3. **PKCE enforcement**:
+     - Verify PKCE (Proof Key for Code Exchange) is enforced for public clients.
+     - Confirm `code_verifier` is not logged or exposed.
+
+  4. **Token handling**:
+     - Confirm access tokens are stored in HttpOnly cookies or server-side sessions.
+     - Flag tokens stored in `localStorage` or exposed in query parameters.
+     - Verify token expiry is enforced and refresh token rotation is implemented.
+
+  5. **Authorization code usage**:
+     - Confirm each authorization code is used only once.
+     - Check for missing `exp` validation on id_tokens.
+
+  6. **Client secret protection**:
+     - Verify client secrets are stored as environment variables, never hardcoded.
+     - Confirm secrets are rotated on any suspected exposure.
+
+  ## Output
+  Prioritized findings with OAuth flow step affected, severity, and recommended fix.

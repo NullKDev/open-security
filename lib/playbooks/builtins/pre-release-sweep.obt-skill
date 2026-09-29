@@ -1,0 +1,53 @@
+id: pre-release-sweep
+name: Pre-Release Security Sweep
+version: 1.0.0
+description: >
+  Comprehensive security sweep to run before a production release.
+  Covers secrets, dependencies, exposed endpoints, and common OWASP Top 10 risks.
+source: builtin
+builtIn: true
+trusted: true
+scannerScope:
+  - gitleaks
+  - trufflehog
+  - semgrep
+  - osv-scanner
+promptTemplate: |
+  # Pre-Release Security Sweep
+
+  ## Target
+  Repository: {{targetPath}}
+
+  ## Objective
+  Perform a thorough security review before releasing to production.
+  Flag any issues that could result in a security incident post-release.
+
+  ## Checklist
+
+  ### 1. Secrets & Credentials
+  - Search for hardcoded API keys, passwords, tokens, and certificates.
+  - Verify `.gitignore` excludes all secret files.
+  - Confirm secrets are sourced from environment variables or a secret manager.
+
+  ### 2. Dependencies
+  - Check all dependencies for known CVEs (OSV / GitHub Advisory Database).
+  - Flag any dependency with a CRITICAL or HIGH severity advisory.
+  - Identify dependencies with no updates in 2+ years.
+
+  ### 3. Input Validation
+  - Verify Zod (or equivalent) schemas are applied at all API boundaries.
+  - Check for missing validation on file uploads, query params, and headers.
+
+  ### 4. Error Handling
+  - Confirm error responses do not leak stack traces or internal paths.
+  - Verify structured error logging is in place (no raw `console.error`).
+
+  ### 5. Authentication & Authorization
+  - Confirm all sensitive routes require authentication.
+  - Review role-based access control for privilege escalation risks.
+
+  ### 6. Rate Limiting
+  - Verify rate limiting is applied to auth, password reset, and API endpoints.
+
+  ## Output
+  Severity-ranked list of findings with file paths, descriptions, and remediation steps.

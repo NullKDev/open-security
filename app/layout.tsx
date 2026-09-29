@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Fira_Code } from "next/font/google";
+import Script from "next/script";
 import { cookies } from "next/headers";
 import { NextIntlClientProvider } from "next-intl";
 import { getUserLocale } from "@/lib/i18n/locale";
@@ -43,17 +44,18 @@ export default async function RootLayout({
     <html
       lang={locale}
       data-theme={theme}
-      className={`${plusJakartaSans.variable} ${firaCode.variable} h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${firaCode.variable} h-full antialiased${theme === "dark" ? " dark" : ""}`}
       suppressHydrationWarning
     >
-      <head>
-        <script
+      <head />
+      <body className="h-full bg-bg text-fg">
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('obt-theme');if(t){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('obt-theme');var d=document.documentElement;if(t){d.setAttribute('data-theme',t);t==='dark'?d.classList.add('dark'):d.classList.remove('dark');}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){d.setAttribute('data-theme','dark');d.classList.add('dark');}}catch(e){}})();`,
           }}
         />
-      </head>
-      <body className="h-full bg-bg text-fg">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Shell>{children}</Shell>
         </NextIntlClientProvider>

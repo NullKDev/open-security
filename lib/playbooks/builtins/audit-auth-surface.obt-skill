@@ -1,0 +1,45 @@
+id: audit-auth-surface
+name: Audit Authentication Surface
+version: 1.0.0
+description: >
+  Reviews all authentication and authorization entry points in the codebase.
+  Identifies missing guards, weak token validation, and auth bypass risks.
+source: builtin
+builtIn: true
+trusted: true
+scannerScope:
+  - semgrep
+  - gitleaks
+promptTemplate: |
+  # Authentication Surface Audit
+
+  ## Target
+  Repository: {{targetPath}}
+
+  ## Objective
+  Perform a comprehensive audit of the authentication and authorization surface.
+
+  ## Analysis Steps
+
+  1. **Map all auth checkpoints**: Locate middleware, route guards, decorators, and
+     any place where authentication is enforced.
+
+  2. **Find unprotected endpoints**: Identify routes or handlers that are accessible
+     without authentication when they should require it.
+
+  3. **Assess token validation**: Review JWT, session, or API key validation:
+     - Algorithm pinning (reject `none` algorithm)
+     - Expiry enforcement
+     - Signature verification strictness
+
+  4. **Check privilege escalation**: Look for IDOR patterns, missing role checks,
+     or logic that can be exploited to escalate privileges.
+
+  5. **Review credential handling**: Confirm that passwords are hashed with a
+     modern algorithm (bcrypt, argon2, scrypt) and salted.
+
+  6. **Assess multi-factor authentication**: Check if MFA is enforced for
+     sensitive operations and cannot be bypassed.
+
+  ## Output
+  List each finding with: location, severity, description, and recommended fix.

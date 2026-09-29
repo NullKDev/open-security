@@ -1,0 +1,39 @@
+name: Build and Release Python Package
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install uv
+        shell: bash
+        run: |
+          # Download uv with checksum verification
+          UV_VERSION="0.5.11"
+          UV_SHASUM="a7bc71790bf31a1b1ddc3f3fa3c8f4b50fd1cc8e1adfdf64ee4f6cb6ade3c2b8e"
+          curl -LsSf "https://github.com/astral-sh/uv/releases/download/${UV_VERSION}/uv-linux-x86_64.tar.gz" | tar -xzf - -C /usr/local/bin
+          echo "${UV_SHASUM} /usr/local/bin/uv" | sha256sum -c -
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish to PyPI
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo::add-matcher::action=pypi-publish
+          uv publish --token ${{ secrets.PYPI_TOKEN }}

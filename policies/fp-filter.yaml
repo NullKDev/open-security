@@ -1,0 +1,10 @@
+rules:
+  - id: skip-test-files
+    match_path: "**/*.test.*"
+    action: filter
+  - id: skip-fixture-files
+    match_path: "**/fixtures/**"
+    action: filter
+  - id: skip-mock-files
+    match_path: "**/__mocks__/**"
+    action: filter

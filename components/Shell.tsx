@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { AppSidebar } from "@/components/AppSidebar";
 
 interface ShellProps {
@@ -14,9 +15,11 @@ interface ShellProps {
  * - SidebarInset (main content area + footer)
  *
  * NOTE: SidebarProvider lives here — do NOT add another one in layout.tsx.
+ * TooltipProvider is required by SidebarMenuButton (shadcn sidebar uses Tooltip internally).
  */
 export function Shell({ children }: ShellProps) {
   return (
+    <TooltipProvider>
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
@@ -36,5 +39,6 @@ export function Shell({ children }: ShellProps) {
         </footer>
       </SidebarInset>
     </SidebarProvider>
+    </TooltipProvider>
   );
 }

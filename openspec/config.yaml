@@ -1,0 +1,11 @@
+project: open-security
+version: 0.1.0
+description: Local-first, BYOK Blue Team security workbench
+artifact_store: hybrid
+conventions:
+  proposal:
+    max_words: 500
+  spec:
+    style: ears
+  changes_dir: openspec/changes
+  specs_dir: openspec/specs

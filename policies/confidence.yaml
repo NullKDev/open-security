@@ -1,0 +1,4 @@
+minimum_report: 0.3
+minimum_validate: 0.5
+minimum_patch: 0.7
+auto_fp_below: 0.2

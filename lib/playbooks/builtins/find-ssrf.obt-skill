@@ -1,0 +1,44 @@
+id: find-ssrf
+name: Find SSRF Vulnerabilities
+version: 1.0.0
+description: >
+  Hunts for Server-Side Request Forgery vulnerabilities across all HTTP client
+  usage in the codebase. Checks for missing allowlists and metadata endpoint exposure.
+source: builtin
+builtIn: true
+trusted: true
+scannerScope:
+  - semgrep
+promptTemplate: |
+  # SSRF Vulnerability Hunt
+
+  ## Target
+  Repository: {{targetPath}}
+
+  ## Objective
+  Find all locations where the server makes outbound HTTP requests that could
+  be influenced by user-controlled input (SSRF).
+
+  ## Analysis Steps
+
+  1. **Locate HTTP client usage**: Find all `fetch`, `axios`, `http.request`,
+     `got`, `node-fetch`, `curl` subprocess calls, and similar.
+
+  2. **Trace URL construction**: Follow user input through the call stack to
+     any URL building. Flag cases where the host, path, or scheme can be influenced.
+
+  3. **Check allowlists**: Verify that URL allowlists or blocklists are applied
+     before every outbound request.
+
+  4. **Metadata endpoint risk**: Check for lack of blocking to cloud metadata
+     services (AWS: 169.254.169.254, GCP: metadata.google.internal).
+
+  5. **Redirect chain risk**: Assess whether redirect following is enabled and
+     whether it can be exploited to reach internal services.
+
+  6. **DNS rebinding**: Evaluate whether the application is vulnerable to
+     DNS rebinding attacks in combination with SSRF.
+
+  ## Output
+  For each finding: file path, line number, HTTP client used, user-input source,
+  risk level, and recommended fix.
